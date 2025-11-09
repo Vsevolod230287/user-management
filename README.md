@@ -14,7 +14,7 @@ cd user-management
 
 2 Avvia l'applicazione:
 
-docker-compose up -d
+docker-compose up -d --build
 
 Attendi il completamento:
 
