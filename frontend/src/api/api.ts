@@ -12,7 +12,7 @@ const api = axios.create({
     },
 });
 
-// Aggiungi interceptors per il token
+// interceptors per il token
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');

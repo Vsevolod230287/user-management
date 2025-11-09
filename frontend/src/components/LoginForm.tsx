@@ -11,31 +11,23 @@ import {
     Container
 } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 export const LoginForm: React.FC = () => {
     const { login, user, isAuthenticated } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Ottieni la pagina da cui proviene l'utente, o default a '/'
-    const from = (location.state as any)?.from?.pathname || '/';
-
     useEffect(() => {
-        // Se l'utente è già autenticato, reindirizza
+        // Se l'utente è già autenticato, reindirizza alla HomePage
         if (isAuthenticated && user) {
-            if (user.roles.some(r => r.name === 'admin')) {
-                navigate('/users', { replace: true });
-            } else {
-                navigate(from, { replace: true });
-            }
+            navigate('/', { replace: true });
         }
-    }, [isAuthenticated, user, navigate, from]);
+    }, [isAuthenticated, user, navigate]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

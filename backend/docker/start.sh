@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Wait for database to be ready
+# Wait for database to be ready - SENZA netcat
 echo "Waiting for database..."
-while ! nc -z db 3306; do
+while ! timeout 1 bash -c "cat < /dev/null > /dev/tcp/db/3306" 2>/dev/null; do
   sleep 1
 done
 
@@ -21,7 +21,12 @@ if [ ! -f ".env" ]; then
 fi
 
 # Run migrations
+echo "Running migrations..."
 php artisan migrate --force
+
+# Run seeders
+echo "Running seeders..."
+php artisan db:seed --force
 
 # Start PHP-FPM in background
 php-fpm &
