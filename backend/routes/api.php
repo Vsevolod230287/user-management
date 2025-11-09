@@ -5,12 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
 // Rotte pubbliche (non richiedono autenticazione)
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']); // crea l'utente
 Route::post('/login', [AuthController::class, 'login']);
 
 // Rotte protette (richiedono autenticazione via Sanctum)
 Route::middleware('auth:sanctum')->group(function () {
-
     // Auth
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
@@ -18,7 +17,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Gestione utenti (CRUD)
     Route::get('/users', [UserController::class, 'index']);        // lista utenti
     Route::get('/users/{user}', [UserController::class, 'show']); // dettaglio utente
-    Route::post('/users', [UserController::class, 'store']);      // crea utente
     Route::put('/users/{user}', [UserController::class, 'update']);   // aggiorna utente
     Route::delete('/users/{user}', [UserController::class, 'destroy']); // elimina utente
 
