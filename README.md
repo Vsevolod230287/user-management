@@ -1,6 +1,6 @@
 User Management System:
 
-Sistema di gestione utenti con autenticazione, autorizzazione basata su ruoli e dashboard amministrativa.
+Sistema di gestione utenti con autenticazione, autorizzazione basata su ruoli.
 
 1 Installazione & Avvio Rapido:
 
