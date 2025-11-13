@@ -17,7 +17,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
 
     if (!isAuthenticated) {
         // Reindirizza al login salvando la posizione corrente
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        return <Navigate to="/" state={{ from: location }} replace />;
     }
 
     // Controlla i ruoli se specificati
