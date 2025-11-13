@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Paper, Alert, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
+import { useAuth } from '../context/AuthContext';
+
 
 export const RegisterForm: React.FC = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -34,7 +37,19 @@ export const RegisterForm: React.FC = () => {
                 password_confirmation: passwordConfirmation,
             });
             setSuccess("Registrazione avvenuta con successo! Effettua il login.");
-            setTimeout(() => navigate('/login'), 2000); // Redirect automatico dopo 2s
+            // 2. Login automatico usando il contesto Auth
+            try {
+                await login({ email, password });
+                setSuccess("Login effettuato con successo! Reindirizzamento...");
+
+                // Naviga alla home dopo il login
+                navigate('/');
+
+            } catch (loginError: any) {
+                setError("Registrazione completata ma login automatico fallito. Effettua il login manualmente.");
+                console.error(loginError);
+                setTimeout(() => navigate('/login'), 3000);
+            }
         } catch (err: any) {
             setError(err.response?.data?.message || 'Errore nella registrazione');
             console.error(err);
